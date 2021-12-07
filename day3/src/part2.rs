@@ -19,7 +19,7 @@ fn main() {
         bit_hist[6] += -1 + 2 * ((line & 0b000000100000) >> 5);
         bit_hist[7] += -1 + 2 * ((line & 0b000000010000) >> 4);
         bit_hist[8] += -1 + 2 * ((line & 0b000000001000) >> 3);
-        bit_hist[9] += -1 + 2 * ((line & 0b000000000100) >> 2);
+        bit_hist[9 ] += -1 + 2 * ((line & 0b000000000100) >> 2);
         bit_hist[10] += -1 + 2 * ((line & 0b000000000010) >> 1);
         bit_hist[11] += -1 + 2 * (line & 0b000000000001);
     }
@@ -34,29 +34,21 @@ fn main() {
     println!("bit_hist {:?}", bit_hist);
     println!("bit_string {}", bit_string);
 
-    let lines: Vec<&i64> = lines
-        .iter()
-        .filter(|bits| {
-            // println!("bits: {}", bits);
-            ((*bits & 0b100000000000) >> 11) == popular_bits[0]
-        })
-        .collect();
+    let mut lines: Vec<i64> = lines;
 
-    let lines: Vec<&&i64> = lines
-        .iter()
-        .filter(|bits| {
-            // println!("bits: {}", bits);
-            ((**bits & 0b010000000000) >> 10) == popular_bits[1]
-        })
-        .collect();
+    for i in (0..12).rev() {
 
-    let lines: Vec<&&&i64> = lines
-        .iter()
-        .filter(|bits| {
-            // println!("bits: {}", bits);
-            ((***bits & 0b001000000000) >> 9) == popular_bits[2]
-        })
-        .collect();
+        lines = lines
+            .iter()
+            .filter(|bits| ((*bits & (0b000000000001 << i)) >> i) == popular_bits[i])
+            .map(|bits| *bits)
+            .collect();
+
+        if lines.len() == 1 {
+            break;
+        }
+
+    }
 
     println!("lines {:?}", lines);
 
