@@ -9,8 +9,6 @@ fn main() {
 
     positions.sort();
 
-    println!("crab positions: {:?}", positions);
-
     let median = positions.get((positions.len() / 2) as usize).unwrap();
 
     println!("median: {}", median);
