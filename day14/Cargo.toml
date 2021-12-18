@@ -14,3 +14,11 @@ path = "./src/part1.rs"
 [[bin]]
 name = "part2"
 path = "./src/part2.rs"
+
+[target.x86_64-unknown-linux-gnu]
+linker = "/usr/bin/clang"
+rustflags = ["-Clink-arg=-fuse-ld=lld", "-Clink-arg=-Wl,--no-rosegment"]
+
+[profile.release]
+# debug = true
+lto = true

@@ -1,8 +1,5 @@
 #![feature(stdin_forwarders, linked_list_cursors, slice_group_by)]
-use std::{
-    collections::{linked_list::CursorMut, BTreeMap, HashMap, LinkedList},
-    io,
-};
+use std::{collections::HashMap, io};
 
 /// A pair insertion rule.
 #[derive(Debug)]
@@ -53,7 +50,7 @@ fn main() {
 
     println!("Template: {:?}", polymers);
 
-    for step in 0..10 {
+    for _step in 0..10 {
         let insertions: Vec<(usize, String)> = polymers
             .windows(2)
             .enumerate()
