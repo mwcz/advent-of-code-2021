@@ -4,11 +4,11 @@ on:
   push:
     branches: [ main ]
     paths:
-      - './**'
+      - './**/*'
   pull_request:
     branches: [ main ]
     paths:
-      - './**'
+      - './**/*'
 
 env:
   CARGO_TERM_COLOR: always
