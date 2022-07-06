@@ -1,4 +1,3 @@
-// #![feature(stdin_forwarders, linked_list_cursors, slice_group_by)]
 // use std::{collections::HashMap, io};
 
 // const STEPS: u32 = 10;

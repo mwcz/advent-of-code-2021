@@ -1,4 +1,3 @@
-#![feature(stdin_forwarders)]
 use std::io;
 
 #[derive(Debug, Clone)]

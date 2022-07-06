@@ -1,4 +1,3 @@
-#![feature(stdin_forwarders)]
 use std::io::{self, Error, Lines, StdinLock};
 
 fn to_int(line: &Result<String, Error>) -> i64 {

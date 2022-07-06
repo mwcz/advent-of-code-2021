@@ -1,4 +1,3 @@
-#![feature(stdin_forwarders)]
 use std::io;
 
 const WIDTH: usize = 12;

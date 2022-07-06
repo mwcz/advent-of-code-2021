@@ -1,4 +1,3 @@
-#![feature(stdin_forwarders)]
 use std::convert::From;
 use std::fmt::Display;
 use std::io::{self, Lines, StdinLock};

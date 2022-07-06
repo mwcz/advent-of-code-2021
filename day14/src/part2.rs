@@ -1,4 +1,3 @@
-#![feature(stdin_forwarders, linked_list_cursors, slice_group_by)]
 use std::io;
 
 const STEPS: u32 = 40;
