@@ -14,8 +14,8 @@ fn main() {
     let mut incs = 0;
     let mut last = i64::MAX;
 
-    for line in lines.windows(3) {
-        let sum: i64 = line.iter().map(to_int).sum();
+    for win in lines.windows(3) {
+        let sum: i64 = win.iter().map(to_int).sum();
 
         if sum > last {
             incs += 1;
