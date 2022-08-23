@@ -1,9 +1,11 @@
 use std::io;
 
+const BOARD_SIZE: usize = 5;
+
 #[derive(Debug, Clone)]
 struct Board {
-    squares: Vec<Vec<u32>>,
-    score: Vec<Vec<u8>>,
+    squares: [[u32; BOARD_SIZE]; BOARD_SIZE],
+    score: [[u8; BOARD_SIZE]; BOARD_SIZE],
 }
 
 impl Board {
@@ -50,17 +52,9 @@ impl Board {
             }
         });
 
-        match row_match {
-            Some(_) => {
-                self.score[match_y][match_x] = 1;
-            }
-            _ => {}
-        };
-
-        // for s in &self.score {
-        //     println!("{:?}", s);
-        // }
-        // println!("");
+        if row_match.is_some() {
+            self.score[match_y][match_x] = 1;
+        }
     }
 
     /// Get a collection of all the unmarked numbers on this board.
@@ -76,10 +70,10 @@ impl Board {
         un
     }
 
-    fn create(numbers: &Vec<Vec<u32>>) -> Self {
+    fn create(numbers: [[u32; BOARD_SIZE]; BOARD_SIZE]) -> Self {
         Self {
-            squares: numbers.clone(),
-            score: vec![vec![0; numbers[0].len()]; numbers.len()],
+            squares: numbers,
+            score: [[0; BOARD_SIZE]; BOARD_SIZE],
         }
     }
 }
@@ -92,7 +86,7 @@ fn main() {
         .next() // get the first line
         .unwrap() // unwrap Option
         .unwrap() // unwrap Result
-        .split(",")
+        .split(',')
         .map(|n| n.parse::<u32>().unwrap()) // parse to u32
         .collect();
 
@@ -103,32 +97,27 @@ fn main() {
     let mut boards: Vec<Board> = lines
         .map(|r| r.unwrap()) // unwrap Result
         .collect::<Vec<String>>() // collect into a Vec of Strings, couldn't figure out how to split a std::io::Lines
-        .split(|line| line.len() == 0) // split on empty lines
+        .split(|line| line.is_empty()) // split on empty lines
         .map(|board| {
-            board
+            let board: [[u32; BOARD_SIZE]; BOARD_SIZE] = board
                 .iter()
                 .map(|row| {
-                    row.trim()
+                    let row: [u32; BOARD_SIZE] = row.trim()
                         .to_string()
                         .split_whitespace()
                         .map(|s| s.parse::<u32>().unwrap())
-                        .collect()
+                        .collect::<Vec<_>>()
+                        .try_into()
+                        .unwrap();
+                    row
                 })
-                .collect()
+                .collect::<Vec<_>>()
+                .try_into()
+                .unwrap();
+            board
         })
-        .map(|numbers| Board::create(&numbers))
+        .map(Board::create)
         .collect();
-
-    // println!("numbers:");
-    // println!("  {:?}\n", numbers);
-
-    // println!("boards ({} found)", boards.len());
-    // for board in &boards {
-    //     for row in &board.squares {
-    //         println!("  {:?}", row);
-    //     }
-    //     println!("");
-    // }
 
     let mut first_matched_board: (Option<u32>, Option<Board>) = (None, None);
 
