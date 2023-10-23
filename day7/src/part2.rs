@@ -11,10 +11,13 @@ fn main() {
 
     println!("mean: {}", mean);
 
-    let fuel: i64 = positions.iter().map(|pos| {
-        let d = (pos - mean).abs();
-        (d.pow(2)+d) / 2
-    }).sum();
+    let fuel: i64 = positions
+        .iter()
+        .map(|pos| {
+            let d = (pos - mean).abs();
+            (d.pow(2) + d) / 2
+        })
+        .sum();
 
     println!("fuel: {}", fuel);
 }

@@ -8,6 +8,7 @@ struct Coord {
     x: isize,
     y: isize,
 }
+
 impl Display for Coord {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
         write!(f, "({}, {})", self.x, self.y)
@@ -166,7 +167,7 @@ fn adjacents_in_basin(
         .filter(|c| in_range(c, terrain))
         .filter(|c| basin_map[c.y as usize][c.x as usize] == 0) // filter out already visited
         .filter(|c| terrain[c.y as usize][c.x as usize] < 9) // not a wall
-        .map(|c| c.clone())
+        .cloned()
         .collect();
 
     // mark this position in the basin map
