@@ -7,12 +7,20 @@ use std::{
 };
 
 fn main() {
-    let lines = io::stdin().lines();
+    // read file specified in args[1] or if none is specified, read from stdin
+    let lines: String = std::env::args()
+        .nth(1)
+        .map(|f| std::fs::read_to_string(f).unwrap())
+        .or_else(|| {
+            Some(String::from_iter(
+                io::stdin().lines().map(|line| line.unwrap()),
+            ))
+        })
+        .unwrap();
 
     let mut exits: Vec<(String, String)> = Vec::new();
 
-    for line in lines {
-        let line = line.unwrap();
+    for line in lines.lines() {
         let mut rooms = line.split('-');
 
         let room1 = rooms.next().unwrap();
@@ -26,40 +34,66 @@ fn main() {
         }
     }
 
-    println!("{:?}", exits);
+    println!("Map: {exits:?}");
 
     let start = "start".to_string();
     let end = "end".to_string();
-    let visited: RefCell<HashSet<String>> = RefCell::new(HashSet::new());
+    // let discovered: RefCell<HashSet<Vec<String>>> = RefCell::new(HashSet::new());
 
-    fn is_small(room: &String) -> bool {
-        &room.to_lowercase() == room
-    }
+    let mut paths: HashSet<Vec<String>> = HashSet::new();
+    // discovered.borrow_mut().insert(start.clone());
 
-    let visitable = |room: &String| -> bool {
-        if is_small(room) {
-            !visited.borrow().contains(room)
-        } else {
-            true
-        }
+    let q = RefCell::new(vec![vec![start.clone()]]);
+    let mut path: Vec<String>;
+
+    let is_small = |room: &String| -> bool {
+        let is_lower = &room.to_lowercase() == room;
+        let is_start = room == &start;
+
+        is_lower && !is_start
     };
 
-    let find_exits = |room: &String| {
-        println!("{room}");
+    let visitable = |room: &String, path: &Vec<String>| -> bool {
+        let room_is_small = is_small(room);
+        let room_is_discovered = path.contains(room);
+        !(room_is_small && room_is_discovered)
+    };
+
+    let find_exits = |room: &String, path: &Vec<String>| {
         exits
             .iter()
-            .filter(|(entry, _)| entry == room && visitable(room))
+            .filter(|(entry, exit)| entry == room && visitable(exit, path))
+            // .inspect(|(entry, exit)| println!("  {entry} -> {exit} is visitable"))
             .map(|(_, exit)| {
-                let is_small = exit.clone() == exit.to_lowercase();
-                if is_small {
-                    visited.borrow_mut().insert(exit.clone());
-                }
+                // let is_small = exit.clone() == exit.to_lowercase() && exit != "end";
+                // if is_small {
+                //     discovered.borrow_mut().insert(exit.clone());
+                // }
                 exit.clone()
             })
             .collect::<Vec<String>>()
     };
 
-    let paths = count_paths(start, find_exits, |r| r == &end);
+    // let paths = count_paths(start, find_exits, |r| r == &end);
 
-    dbg!(paths);
+    // dbg!(paths);
+
+    while !q.borrow().is_empty() {
+        path = q.borrow_mut().pop().unwrap();
+        println!("{}", path.join(", "));
+        let exits = find_exits(path.last().unwrap(), &path);
+        println!("  valid exits: {}", exits.join(", "));
+        for exit in exits {
+            let mut newpath = path.clone();
+            newpath.push(exit.clone());
+            if exit == end {
+                paths.insert(newpath);
+            } else {
+                q.borrow_mut().push(newpath.clone());
+            }
+        }
+    }
+
+    println!("path count: {}", paths.len());
 }
+
