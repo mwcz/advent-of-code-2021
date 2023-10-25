@@ -1,93 +1,112 @@
-use std::io;
+use std::{
+    cell::RefCell,
+    collections::{HashMap, HashSet},
+    io,
+};
 
 fn main() {
-    let lines = io::stdin().lines();
+    // read file specified in args[1] or if none is specified, read from stdin
+    let lines: String = std::env::args()
+        .nth(1)
+        .map(|f| std::fs::read_to_string(f).unwrap())
+        .or_else(|| {
+            Some(String::from_iter(
+                io::stdin().lines().map(|line| line.unwrap()),
+            ))
+        })
+        .unwrap();
 
-    let mut stack: Vec<char> = Vec::new();
+    let mut exits: Vec<(String, String)> = Vec::new();
 
-    let mut scores: Vec<u64> = Vec::new();
+    for line in lines.lines() {
+        let mut rooms = line.split('-');
 
-    let mut paren_stack = 0;
-    let mut brace_stack = 0;
-    let mut bracket_stack = 0;
-    let mut angle_stack = 0;
+        let room1 = rooms.next().unwrap();
+        let room2 = rooms.next().unwrap();
 
-    'line: for line in lines {
-        stack.clear();
-        if let Ok(line) = line {
-            for ch in line.chars() {
-                match ch {
-                    '(' => {
-                        paren_stack += 1;
-                        stack.push('(');
-                    }
-                    ')' => {
-                        if paren_stack > 0 && stack.last() == Some(&'(') {
-                            paren_stack -= 1;
-                            stack.pop();
-                        } else {
-                            continue 'line;
-                        }
-                    }
-                    '{' => {
-                        brace_stack += 1;
-                        stack.push('{');
-                    }
-                    '}' => {
-                        if brace_stack > 0 && stack.last() == Some(&'{') {
-                            brace_stack -= 1;
-                            stack.pop();
-                        } else {
-                            continue 'line;
-                        }
-                    }
-                    '[' => {
-                        bracket_stack += 1;
-                        stack.push('[');
-                    }
-                    ']' => {
-                        if bracket_stack > 0 && stack.last() == Some(&'[') {
-                            bracket_stack -= 1;
-                            stack.pop();
-                        } else {
-                            continue 'line;
-                        }
-                    }
-                    '<' => {
-                        angle_stack += 1;
-                        stack.push('<');
-                    }
-                    '>' => {
-                        if angle_stack > 0 && stack.last() == Some(&'<') {
-                            angle_stack -= 1;
-                            stack.pop();
-                        } else {
-                            continue 'line;
-                        }
-                    }
-                    _ => {}
-                }
-            }
+        if room1 != "end" && room2 != "start" {
+            exits.push((room1.into(), room2.into()));
         }
-        let mut score = 0;
-        stack.reverse();
-        for c in &stack {
-            score *= 5;
-            score += match c {
-                '(' => 1,
-                '[' => 2,
-                '{' => 3,
-                '<' => 4,
-                _ => 0,
-            }
+        if room1 != "start" && room2 != "end" {
+            exits.push((room2.into(), room1.into()));
         }
-        scores.push(score);
     }
 
-    // count unclosed surrounds as errors
+    println!("Map: {exits:?}");
 
-    scores.sort();
-    let answer = scores[scores.len() / 2];
+    let start = "start".to_string();
+    let end = "end".to_string();
+    // let discovered: RefCell<HashSet<Vec<String>>> = RefCell::new(HashSet::new());
 
-    println!("{}", answer);
+    let mut paths: HashSet<Vec<String>> = HashSet::new();
+    // discovered.borrow_mut().insert(start.clone());
+
+    let q = RefCell::new(vec![vec![start.clone()]]);
+    let mut path: Vec<String>;
+
+    let is_small = |room: &String| -> bool {
+        let is_lower = &room.to_lowercase() == room;
+        let is_start = room == &start;
+
+        is_lower && !is_start
+    };
+
+    let visitable = |room: &String, path: &Vec<String>| -> bool {
+        let room_is_small = is_small(room);
+
+        // a room in path can be revisited if each small room has only been visited once, so get
+        // the small rooms from path and count the occurrences of each room
+        let small_rooms = path.iter().filter(|r| is_small(r));
+        let mut small_room_counts: HashMap<String, usize> = HashMap::new();
+        for room in small_rooms {
+            let count = small_room_counts.entry(room.clone()).or_insert(0);
+            *count += 1;
+        }
+
+        let can_revisit = room_is_small && !small_room_counts.values().any(|&c| c > 1);
+
+        // println!("  path: {}", path.join(", "));
+        // println!("  can revisit: {}", can_revisit);
+
+        let room_is_discovered = path.contains(room);
+
+        can_revisit || !(room_is_small && room_is_discovered)
+    };
+
+    let find_exits = |room: &String, path: &Vec<String>| {
+        exits
+            .iter()
+            .filter(|(entry, exit)| entry == room && visitable(exit, path))
+            // .inspect(|(entry, exit)| println!("  {entry} -> {exit} is visitable"))
+            .map(|(_, exit)| {
+                // let is_small = exit.clone() == exit.to_lowercase() && exit != "end";
+                // if is_small {
+                //     discovered.borrow_mut().insert(exit.clone());
+                // }
+                exit.clone()
+            })
+            .collect::<Vec<String>>()
+    };
+
+    // let paths = count_paths(start, find_exits, |r| r == &end);
+
+    // dbg!(paths);
+
+    while !q.borrow().is_empty() {
+        path = q.borrow_mut().pop().unwrap();
+        // println!("{}", path.join(", "));
+        let exits = find_exits(path.last().unwrap(), &path);
+        // println!("  valid exits: {}", exits.join(", "));
+        for exit in exits {
+            let mut newpath = path.clone();
+            newpath.push(exit.clone());
+            if exit == end {
+                paths.insert(newpath);
+            } else {
+                q.borrow_mut().push(newpath.clone());
+            }
+        }
+    }
+
+    println!("path count: {}", paths.len());
 }

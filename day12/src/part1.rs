@@ -1,10 +1,4 @@
-use pathfinding::prelude::*;
-use std::{
-    cell::RefCell,
-    collections::{HashMap, HashSet},
-    io,
-    rc::Rc,
-};
+use std::{cell::RefCell, collections::HashSet, io};
 
 fn main() {
     // read file specified in args[1] or if none is specified, read from stdin
