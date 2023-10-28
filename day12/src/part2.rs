@@ -10,9 +10,13 @@ fn main() {
         .nth(1)
         .map(|f| std::fs::read_to_string(f).unwrap())
         .or_else(|| {
-            Some(String::from_iter(
-                io::stdin().lines().map(|line| line.unwrap()),
-            ))
+            Some(
+                std::io::stdin()
+                    .lines()
+                    .map(|line| line.unwrap())
+                    .collect::<Vec<String>>()
+                    .join("\n"),
+            )
         })
         .unwrap();
 
@@ -36,10 +40,7 @@ fn main() {
 
     let start = "start".to_string();
     let end = "end".to_string();
-    // let discovered: RefCell<HashSet<Vec<String>>> = RefCell::new(HashSet::new());
-
     let mut paths: HashSet<Vec<String>> = HashSet::new();
-    // discovered.borrow_mut().insert(start.clone());
 
     let q = RefCell::new(vec![vec![start.clone()]]);
     let mut path: Vec<String>;
@@ -77,26 +78,15 @@ fn main() {
         exits
             .iter()
             .filter(|(entry, exit)| entry == room && visitable(exit, path))
-            // .inspect(|(entry, exit)| println!("  {entry} -> {exit} is visitable"))
             .map(|(_, exit)| {
-                // let is_small = exit.clone() == exit.to_lowercase() && exit != "end";
-                // if is_small {
-                //     discovered.borrow_mut().insert(exit.clone());
-                // }
                 exit.clone()
             })
             .collect::<Vec<String>>()
     };
 
-    // let paths = count_paths(start, find_exits, |r| r == &end);
-
-    // dbg!(paths);
-
     while !q.borrow().is_empty() {
         path = q.borrow_mut().pop().unwrap();
-        // println!("{}", path.join(", "));
         let exits = find_exits(path.last().unwrap(), &path);
-        // println!("  valid exits: {}", exits.join(", "));
         for exit in exits {
             let mut newpath = path.clone();
             newpath.push(exit.clone());

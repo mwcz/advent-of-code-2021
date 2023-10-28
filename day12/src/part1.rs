@@ -6,9 +6,13 @@ fn main() {
         .nth(1)
         .map(|f| std::fs::read_to_string(f).unwrap())
         .or_else(|| {
-            Some(String::from_iter(
-                io::stdin().lines().map(|line| line.unwrap()),
-            ))
+            Some(
+                std::io::stdin()
+                    .lines()
+                    .map(|line| line.unwrap())
+                    .collect::<Vec<String>>()
+                    .join("\n"),
+            )
         })
         .unwrap();
 
@@ -90,4 +94,3 @@ fn main() {
 
     println!("path count: {}", paths.len());
 }
-
