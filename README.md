@@ -1,19 +1,9 @@
-# Advent of Code 2021 solutions
+# Advent of Code 2021 🦀
 
-My Advent of Code 2021 solutions, in Rust.
+These are my Rust solutions for [Advent of Code 2021](https://adventofcode.com/2021).
 
-I didn't know about [cargo-aoc](https://crates.io/crates/cargo-aoc) when I started this, so these follow my own layout.
+[My AoC solutions for other years](https://github.com/mwcz?tab=repositories&q=advent&type=source&language=&sort=name)
 
-All examples require `cargo` to build.  See [Cargo installation](https://doc.rust-lang.org/cargo/getting-started/installation.html).
+## Running solutions
 
-To run a given day's solution:
-
-```
-cd day3 # or any other day
-
-# run part 1
-cargo run --bin part1 < input
-
-# run part 2
-cargo run --bin part2 < input
-```
+Install [justfile](https://just.systems/man/en/) and run `just --list` to get started.
