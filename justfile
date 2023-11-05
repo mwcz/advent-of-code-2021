@@ -7,6 +7,7 @@ FORCE_DEFAULT := ""
 @day DAY:
   echo "starting day {{DAY}} year $AOC_YEAR"
   just input {{DAY}}
+  just example {{DAY}}
   just template {{DAY}}
   just update_lib {{DAY}}
   just vim {{DAY}}
@@ -25,7 +26,7 @@ FORCE_DEFAULT := ""
 @example DAY:
   if [ ! -f examples/d{{DAY}} ]; then \
     mkdir examples -p 2> /dev/null; \
-    touch examples/{{DAY}}; \
+    touch examples/d{{DAY}}; \
     echo "empty example created: examples/d{{DAY}}"; \
   else \
     echo "example for day {{DAY}} already exists in examples/d{{DAY}}"; \
