@@ -53,13 +53,16 @@ FORCE_DEFAULT := ""
   sort -u src/lib.rs -o src/lib.rs
 
 # shorthand for cargo run
-@run *ARGS:
-  cargo r -- {{ARGS}}
+@run DAY *ARGS:
+  cargo r -- -d {{DAY}} {{ARGS}}
 
 # shorthand for cargo run -r
-@rrun *ARGS:
-  cargo r -r -- {{ARGS}}
+@r DAY *ARGS:
+  cargo r -r -- -d {{DAY}} {{ARGS}}
 
 # run with console visualization (not all days have this)
-@viz *ARGS:
-  cargo r -r -F visualize -- {{ARGS}}
+@viz DAY *ARGS:
+  cargo r -r -F visualize -- -d {{DAY}} {{ARGS}}
+
+@watch DAY *ARGS:
+  find src/d{{DAY}}.rs input/d{{DAY}} examples/d{{DAY}} | entr -c just run {{DAY}} {{ARGS}}
