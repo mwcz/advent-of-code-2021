@@ -1,6 +1,8 @@
 // an Answer trait which requires Debug and Display
 use std::fmt::{Debug, Display};
 
+/// Types that are Answer can be used as AOC answers.  These types must be Debug, Display (to print
+/// the answer), and PartialEq (to be usable in tests).
 pub trait Answer: Debug + Display + PartialEq {}
 
 impl Answer for String {}

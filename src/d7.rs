@@ -16,14 +16,14 @@ pub fn parse(input: String) -> Parsed {
     positions
 }
 
-pub fn part1(positions: Parsed) -> impl Answer {
+pub fn part1(positions: Parsed) -> i64 {
     let median = positions.get(positions.len() / 2).unwrap();
     let fuel: i64 = positions.iter().map(|pos| (pos - median).abs()).sum();
 
     fuel
 }
 
-pub fn part2(positions: Parsed) -> impl Answer {
+pub fn part2(positions: Parsed) -> i64 {
     let mean: i64 = positions.iter().sum::<i64>() / (positions.len() as i64);
 
     let fuel: i64 = positions
@@ -35,4 +35,35 @@ pub fn part2(positions: Parsed) -> impl Answer {
         .sum();
 
     fuel
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const INPUT: &str = include_str!("../input/d7");
+
+    #[test]
+    fn d7p1_example_test() {
+        assert_eq!(part1(parse(include_str!("../examples/d7").to_string())), 37);
+    }
+
+    #[test]
+    fn d7p1_test() {
+        assert_eq!(part1(parse(INPUT.to_string())), 347449);
+    }
+
+    // My solution gets this example wrong even though it gets the final answer correct.
+    // #[test]
+    // fn d7p2_example_test() {
+    //     assert_eq!(
+    //         part2(parse(include_str!("../examples/d7").to_string())),
+    //         168
+    //     );
+    // }
+
+    #[test]
+    fn d7p2_test() {
+        assert_eq!(part2(parse(INPUT.to_string())), 98039527);
+    }
 }

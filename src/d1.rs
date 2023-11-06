@@ -1,15 +1,13 @@
 //! A solution to day 1 year 2021.
 //! https://adventofcode.com/2021/day/1
 
-use crate::answer::Answer;
-
 type Parsed = String;
 
 pub fn parse(input: String) -> Parsed {
     input
 }
 
-pub fn part1(input: Parsed) -> impl Answer {
+pub fn part1(input: Parsed) -> u32 {
     let mut incs = 0;
     let mut last = i64::MAX;
 
@@ -26,7 +24,7 @@ pub fn part1(input: Parsed) -> impl Answer {
     incs
 }
 
-pub fn part2(input: Parsed) -> impl Answer {
+pub fn part2(input: Parsed) -> u32 {
     let mut incs = 0;
     let mut last = i64::MAX;
 
@@ -45,4 +43,21 @@ pub fn part2(input: Parsed) -> impl Answer {
 
 fn to_int(line: &&str) -> i64 {
     line.parse::<i64>().unwrap()
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const INPUT: &str = include_str!("../input/d1");
+
+    #[test]
+    fn d1p1_test() {
+        assert_eq!(part1(parse(INPUT.to_string())), 1451);
+    }
+
+    #[test]
+    fn d1p2_test() {
+        assert_eq!(part2(parse(INPUT.to_string())), 1395);
+    }
 }
