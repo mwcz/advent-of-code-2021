@@ -1,16 +1,16 @@
 //! A solution to day 12 year 2021.
 //! https://adventofcode.com/2021/day/12
 
-use crate::answer::Answer;
 use std::{
     cell::RefCell,
     collections::{HashMap, HashSet},
     io,
 };
 
-type Parsed = Vec<(String, String)>;
+type Model = Vec<(String, String)>;
+type Answer = usize;
 
-pub fn parse(input: String) -> Parsed {
+pub fn parse(input: String) -> Model {
     let mut exits: Vec<(String, String)> = Vec::new();
 
     for line in input.lines() {
@@ -30,7 +30,7 @@ pub fn parse(input: String) -> Parsed {
     exits
 }
 
-pub fn part1(exits: Parsed) -> impl Answer {
+pub fn part1(exits: Model) -> Answer {
     let start = "start".to_string();
     let end = "end".to_string();
     // let discovered: RefCell<HashSet<Vec<String>>> = RefCell::new(HashSet::new());
@@ -92,7 +92,7 @@ pub fn part1(exits: Parsed) -> impl Answer {
     paths.len()
 }
 
-pub fn part2(exits: Parsed) -> impl Answer {
+pub fn part2(exits: Model) -> Answer {
     let start = "start".to_string();
     let end = "end".to_string();
     let mut paths: HashSet<Vec<String>> = HashSet::new();

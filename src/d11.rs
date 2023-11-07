@@ -1,20 +1,20 @@
 //! A solution to day 11 year 2021.
 //! https://adventofcode.com/2021/day/11
 
-use crate::answer::Answer;
 use std::{
     cell::RefCell,
     fmt::Display,
     io::{self, Lines, StdinLock},
 };
 
-type Parsed = Octopi;
+type Model = Octopi;
+type Answer = usize;
 
-pub fn parse(input: String) -> Parsed {
+pub fn parse(input: String) -> Model {
     Octopi::from(input)
 }
 
-pub fn part1(mut octo: Octopi) -> impl Answer {
+pub fn part1(mut octo: Octopi) -> Answer {
     let mut sum = 0;
 
     for _ in 0..100 {
@@ -26,7 +26,7 @@ pub fn part1(mut octo: Octopi) -> impl Answer {
     sum
 }
 
-pub fn part2(mut octo: Octopi) -> impl Answer {
+pub fn part2(mut octo: Octopi) -> Answer {
     for step in 1.. {
         if octo.step() == 100 {
             return step;
@@ -128,5 +128,3 @@ impl From<String> for Octopi {
         Octopi { levels }
     }
 }
-
-impl Answer for Octopi {}

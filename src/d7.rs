@@ -1,11 +1,10 @@
 //! A solution to day 7 year 2021.
 //! https://adventofcode.com/2021/day/7
 
-use crate::answer::Answer;
+type Model = Vec<i64>;
+type Answer = i32;
 
-type Parsed = Vec<i64>;
-
-pub fn parse(input: String) -> Parsed {
+pub fn parse(input: String) -> Model {
     let mut positions: Vec<i64> = input
         .split(',')
         .map(|s| s.trim().parse::<i64>().unwrap())
@@ -16,14 +15,14 @@ pub fn parse(input: String) -> Parsed {
     positions
 }
 
-pub fn part1(positions: Parsed) -> i64 {
+pub fn part1(positions: Model) -> i64 {
     let median = positions.get(positions.len() / 2).unwrap();
     let fuel: i64 = positions.iter().map(|pos| (pos - median).abs()).sum();
 
     fuel
 }
 
-pub fn part2(positions: Parsed) -> i64 {
+pub fn part2(positions: Model) -> i64 {
     let mean: i64 = positions.iter().sum::<i64>() / (positions.len() as i64);
 
     let fuel: i64 = positions

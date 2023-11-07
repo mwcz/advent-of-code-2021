@@ -1,7 +1,6 @@
 //! A solution to day 25 year 2021.
 //! https://adventofcode.com/2021/day/25
 
-use crate::answer::Answer;
 #[cfg(feature = "visualize")]
 use console_engine::{ConsoleEngine, KeyCode};
 use std::convert::From;
@@ -9,13 +8,14 @@ use std::fmt::Display;
 use std::io::{self, Lines, StdinLock};
 use std::time::Duration;
 
-type Parsed = SeaFloor;
+type Model = SeaFloor;
+type Answer = u32;
 
-pub fn parse(input: String) -> Parsed {
+pub fn parse(input: String) -> Model {
     SeaFloor::new(input)
 }
 
-pub fn part1(mut floor: Parsed) -> impl Answer {
+pub fn part1(mut floor: Model) -> Answer {
     while !floor.locked {
         floor.step();
     }
@@ -23,8 +23,8 @@ pub fn part1(mut floor: Parsed) -> impl Answer {
     floor.steps
 }
 
-pub fn part2(input: Parsed) -> impl Answer {
-    "merry christmas!"
+pub fn part2(input: Model) -> String {
+    "merry christmas!".to_string()
 }
 
 #[derive(Debug, Copy, Clone)]

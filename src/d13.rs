@@ -1,7 +1,6 @@
 //! A solution to day 13 year 2021.
 //! https://adventofcode.com/2021/day/13
 
-use crate::answer::Answer;
 use std::{
     fmt::Display,
     io::Write,
@@ -9,9 +8,10 @@ use std::{
     str::Split,
 };
 
-type Parsed = (Grid, Vec<Move>);
+type Model = (Grid, Vec<Move>);
+type Answer = usize;
 
-pub fn parse(input: String) -> Parsed {
+pub fn parse(input: String) -> Model {
     let mut input_parts = input.split("\n\n");
     let mut points: Vec<Point> = input_parts
         .next()
@@ -25,7 +25,7 @@ pub fn parse(input: String) -> Parsed {
     (Grid(points), moves)
 }
 
-pub fn part1((mut grid, moves): Parsed) -> impl Answer {
+pub fn part1((mut grid, moves): Model) -> Answer {
     // dbg!(&points);
     // dbg!(&moves);
 
@@ -63,7 +63,7 @@ pub fn part1((mut grid, moves): Parsed) -> impl Answer {
     counts.len()
 }
 
-pub fn part2((mut grid, moves): Parsed) -> impl Answer {
+pub fn part2((mut grid, moves): Model) -> Grid {
     for mov in &moves {
         for point in grid.iter_mut() {
             match mov.axis {
@@ -180,5 +180,3 @@ impl Display for Grid {
         Ok(())
     }
 }
-
-impl Answer for Grid {}

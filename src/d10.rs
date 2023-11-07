@@ -1,15 +1,14 @@
 //! A solution to day 10 year 2021.
 //! https://adventofcode.com/2021/day/10
 
-use crate::answer::Answer;
+type Model = String;
+type Answer = u64;
 
-type Parsed = String;
-
-pub fn parse(input: String) -> Parsed {
+pub fn parse(input: String) -> Model {
     input
 }
 
-pub fn part1(input: Parsed) -> impl Answer {
+pub fn part1(input: Model) -> Answer {
     let mut stack: Vec<char> = Vec::new();
 
     let mut paren_stack = 0;
@@ -94,7 +93,7 @@ pub fn part1(input: Parsed) -> impl Answer {
     paren_error + bracket_error + brace_error + angle_error
 }
 
-pub fn part2(input: Parsed) -> impl Answer {
+pub fn part2(input: Model) -> Answer {
     let mut stack: Vec<char> = Vec::new();
 
     let mut scores: Vec<u64> = Vec::new();

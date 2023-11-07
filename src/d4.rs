@@ -1,11 +1,10 @@
 //! A solution to day 4 year 2021.
 //! https://adventofcode.com/2021/day/4
 
-use crate::answer::Answer;
+type Model = (Vec<u32>, Vec<Board>);
+type Answer = u32;
 
-type Parsed = (Vec<u32>, Vec<Board>);
-
-pub fn parse(input: String) -> Parsed {
+pub fn parse(input: String) -> Model {
     let mut lines = input.lines();
 
     // parse the numbers on the first line
@@ -48,7 +47,7 @@ pub fn parse(input: String) -> Parsed {
     (numbers, boards)
 }
 
-pub fn part1((numbers, mut boards): Parsed) -> impl Answer {
+pub fn part1((numbers, mut boards): Model) -> Answer {
     let mut first_matched_board: (Option<u32>, Option<Board>) = (None, None);
 
     'nums: for n in numbers {
@@ -80,7 +79,7 @@ pub fn part1((numbers, mut boards): Parsed) -> impl Answer {
     answer
 }
 
-pub fn part2((numbers, mut boards): Parsed) -> impl Answer {
+pub fn part2((numbers, mut boards): Model) -> Answer {
     let mut last_matched_board: (Option<u32>, Option<Board>) = (None, None);
 
     for n in numbers {

@@ -1,14 +1,14 @@
 //! A solution to day 14 year 2021.
 //! https://adventofcode.com/2021/day/14
 
-use crate::answer::Answer;
 use std::{collections::HashMap, io};
 
-type Parsed = (ParsedPart1, ParsedPart2);
-type ParsedPart1 = (Vec<String>, Vec<PairRule>);
-type ParsedPart2 = (Vec<String>, Vec<(usize, usize)>, Vec<String>);
+type Model = (ModelPart1, ModelPart2);
+type Answer = i64;
+type ModelPart1 = (Vec<String>, Vec<PairRule>);
+type ModelPart2 = (Vec<String>, Vec<(usize, usize)>, Vec<String>);
 
-pub fn parse(input: String) -> Parsed {
+pub fn parse(input: String) -> Model {
     (parse_part1(input.clone()), parse_part2(input.clone()))
 }
 
@@ -50,7 +50,7 @@ pub fn parse_part1(input: String) -> (Vec<String>, Vec<PairRule>) {
     (polymers, rules)
 }
 
-pub fn parse_part2(input: String) -> ParsedPart2 {
+pub fn parse_part2(input: String) -> ModelPart2 {
     let mut lines = input.lines();
 
     // parse the numbers on the first line
@@ -104,7 +104,7 @@ pub fn parse_part2(input: String) -> ParsedPart2 {
     (polymers, rules, pairs)
 }
 
-pub fn part1(((mut polymers, rules), _): Parsed) -> impl Answer {
+pub fn part1(((mut polymers, rules), _): Model) -> Answer {
     // println!("Template: {:?}", polymers);
 
     for _step in 0..10 {
@@ -146,7 +146,7 @@ pub fn part1(((mut polymers, rules), _): Parsed) -> impl Answer {
         hash
     });
 
-    let mut poly_counts: Vec<&i32> = poly_groups.values().collect();
+    let mut poly_counts: Vec<&i64> = poly_groups.values().collect();
     poly_counts.sort();
 
     // println!("final polymer chain: {:?}", polymers.join(""));
@@ -159,7 +159,7 @@ pub fn part1(((mut polymers, rules), _): Parsed) -> impl Answer {
     **poly_counts.last().unwrap() - **poly_counts.first().unwrap()
 }
 
-pub fn part2((_, (mut polymers, rules, pairs)): Parsed) -> impl Answer {
+pub fn part2((_, (mut polymers, rules, pairs)): Model) -> Answer {
     let mut pair_counts = vec![0_i64; pairs.len()];
     let mut step_count = vec![0_i64; pairs.len()];
 

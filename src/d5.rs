@@ -1,11 +1,10 @@
 //! A solution to day 5 year 2021.
 //! https://adventofcode.com/2021/day/5
 
-use crate::answer::Answer;
+type Model = (Vec<Line>, Point);
+type Answer = i32;
 
-type Parsed = (Vec<Line>, Point);
-
-pub fn parse(input: String) -> Parsed {
+pub fn parse(input: String) -> Model {
     let input_lines = input.lines();
     let mut max_x = 0;
     let mut max_y = 0;
@@ -34,7 +33,7 @@ pub fn parse(input: String) -> Parsed {
     (lines, Point { x: max_x, y: max_y })
 }
 
-pub fn part1((lines, max): Parsed) -> impl Answer {
+pub fn part1((lines, max): Model) -> Answer {
     let mut map: Vec<Vec<usize>> = vec![vec![0; max.x + 1]; max.y + 1];
     let mut danger_count = 0;
 
@@ -64,7 +63,7 @@ pub fn part1((lines, max): Parsed) -> impl Answer {
     danger_count
 }
 
-pub fn part2((lines, max): Parsed) -> impl Answer {
+pub fn part2((lines, max): Model) -> Answer {
     let mut map: Vec<Vec<i32>> = vec![vec![0; (max.x + 1)]; (max.y + 1)];
     let mut danger_count = 0;
 

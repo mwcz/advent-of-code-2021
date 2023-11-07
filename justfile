@@ -2,7 +2,6 @@ set dotenv-load
 set positional-arguments
 
 FORCE_DEFAULT := ""
-WATCH_CMD_DEFAULT := "run"
 
 # scaffold a new day and open its files in vim
 @day DAY:
@@ -58,7 +57,7 @@ WATCH_CMD_DEFAULT := "run"
 # update src/lib.rs with the new day
 @update_lib DAY:
   echo "pub mod d{{DAY}};" >> src/lib.rs
-  sort -u src/lib.rs -o src/lib.rs
+  sort -nu src/lib.rs -o src/lib.rs
 
 # shorthand for cargo run
 @run DAY *ARGS:
@@ -88,4 +87,4 @@ WATCH_CMD_DEFAULT := "run"
 
 # run tests (using cargo-nextest)
 @test DAY *ARGS:
-  cargo nextest run d{{DAY}}p {{ARGS}}
+  cargo nextest run {{DAY}}p {{ARGS}}

@@ -1,12 +1,12 @@
 //! A solution to day 15 year 2021.
 //! https://adventofcode.com/2021/day/15
 
-use crate::answer::Answer;
 use pathfinding::prelude::dijkstra;
 
-type Parsed = Vec<Vec<u32>>;
+type Model = Vec<Vec<u32>>;
+type Answer = u32;
 
-pub fn parse(input: String) -> Parsed {
+pub fn parse(input: String) -> Model {
     let grid: Vec<Vec<u32>> = input
         .lines()
         .map(|row| row.chars().map(|c| c.to_digit(10).unwrap()).collect())
@@ -15,7 +15,7 @@ pub fn parse(input: String) -> Parsed {
     grid
 }
 
-pub fn part1(grid: Parsed) -> impl Answer {
+pub fn part1(grid: Model) -> Answer {
     let start: (usize, usize) = (0, 0);
     let end: (usize, usize) = (grid.len() - 1, grid[0].len() - 1);
 
@@ -51,7 +51,7 @@ pub fn part1(grid: Parsed) -> impl Answer {
     lowest_risk
 }
 
-pub fn part2(grid_part: Parsed) -> impl Answer {
+pub fn part2(grid_part: Model) -> Answer {
     let orig_width = grid_part.len();
     let orig_height = grid_part[0].len();
 

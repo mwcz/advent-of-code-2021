@@ -1,11 +1,10 @@
 //! A solution to day 6 year 2021.
 //! https://adventofcode.com/2021/day/6
 
-use crate::answer::Answer;
+type Model = [i64; 9];
+type Answer = i64;
 
-type Parsed = [i64; 9];
-
-pub fn parse(input: String) -> Parsed {
+pub fn parse(input: String) -> Model {
     let numbers: Vec<i64> = input
         .split(',')
         .map(|s| s.trim().parse::<i64>().unwrap())
@@ -22,15 +21,15 @@ pub fn parse(input: String) -> Parsed {
     counts
 }
 
-pub fn part1(counts: Parsed) -> impl Answer {
+pub fn part1(counts: Model) -> Answer {
     solve(counts, 80)
 }
 
-pub fn part2(counts: Parsed) -> impl Answer {
+pub fn part2(counts: Model) -> Answer {
     solve(counts, 256)
 }
 
-pub fn solve(mut counts: Parsed, days: usize) -> impl Answer {
+pub fn solve(mut counts: Model, days: usize) -> Answer {
     // simulate days
     for _ in 0..days {
         let spawns = counts[0];

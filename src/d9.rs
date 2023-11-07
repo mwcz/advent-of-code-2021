@@ -1,16 +1,16 @@
 //! A solution to day 9 year 2021.
 //! https://adventofcode.com/2021/day/9
 
-use crate::answer::Answer;
 #[cfg(feature = "visualize")]
 use console_engine::{ConsoleEngine, KeyCode};
 use std::fmt::Display;
 
-type Parsed = Vec<Vec<u8>>;
+type Model = Vec<Vec<u8>>;
+type Answer = usize;
 
 const WALL: u8 = 10;
 
-pub fn parse(input: String) -> Parsed {
+pub fn parse(input: String) -> Model {
     let rows = input
         .lines()
         .map(|line| {
@@ -23,7 +23,7 @@ pub fn parse(input: String) -> Parsed {
     rows
 }
 
-pub fn part1(rows: Parsed) -> impl Answer {
+pub fn part1(rows: Model) -> Answer {
     let mut risks: Vec<u8> = Vec::new();
 
     for y in 0..rows.len() {
@@ -54,10 +54,10 @@ pub fn part1(rows: Parsed) -> impl Answer {
         }
     }
 
-    risks.iter().map(|r| *r as u32).sum::<u32>()
+    risks.iter().map(|r| *r as u32).sum::<u32>() as usize
 }
 
-pub fn part2(terrain: Parsed) -> impl Answer {
+pub fn part2(terrain: Model) -> Answer {
     let mut low_points: Vec<Coord> = Vec::new();
     let width = terrain[0].len();
     let height = terrain.len();

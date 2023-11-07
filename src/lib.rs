@@ -4,7 +4,6 @@
 #![allow(unused)]
 #![feature(int_roundings)]
 #![feature(slice_group_by)]
-pub mod answer;
 pub mod d1;
 pub mod d10;
 pub mod d11;

@@ -3,15 +3,14 @@
 
 use std::collections::HashMap;
 
-use crate::answer::Answer;
+type Model = String;
+type Answer = usize;
 
-type Parsed = String;
-
-pub fn parse(input: String) -> Parsed {
+pub fn parse(input: String) -> Model {
     input
 }
 
-pub fn part1(input: Parsed) -> impl Answer {
+pub fn part1(input: Model) -> Answer {
     let digits: usize = input
         .lines()
         .map(|line| {
@@ -29,7 +28,7 @@ pub fn part1(input: Parsed) -> impl Answer {
     digits
 }
 
-pub fn part2(input: Parsed) -> impl Answer {
+pub fn part2(input: Model) -> String {
     let alpha_to_num = HashMap::from([
         ('a', 0),
         ('b', 1),
@@ -119,5 +118,5 @@ pub fn part2(input: Parsed) -> impl Answer {
 
     dbg!(&with_uniq_lens);
 
-    "incomplete"
+    "incomplete".to_string()
 }

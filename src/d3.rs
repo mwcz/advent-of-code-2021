@@ -3,15 +3,14 @@
 
 use std::cmp::Ordering::{Equal, Greater, Less};
 
-use crate::answer::Answer;
+type Model = String;
+type Answer = u64;
 
-type Parsed = String;
-
-pub fn parse(input: String) -> Parsed {
+pub fn parse(input: String) -> Model {
     input
 }
 
-pub fn part1(input: Parsed) -> impl Answer {
+pub fn part1(input: Model) -> Answer {
     let lines = input.lines();
 
     let mut bit_hist = [0; 12];
@@ -47,7 +46,7 @@ pub fn part1(input: Parsed) -> impl Answer {
     epsilon * gamma
 }
 
-pub fn part2(input: Parsed) -> impl Answer {
+pub fn part2(input: Model) -> i64 {
     const WIDTH: usize = 12;
 
     fn bit_hist(bits: &[i64], index: usize, tie: i64) -> i64 {

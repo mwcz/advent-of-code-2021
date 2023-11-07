@@ -1,15 +1,14 @@
 //! A solution to day 2 year 2021.
 //! https://adventofcode.com/2021/day/2
 
-use crate::answer::Answer;
+type Model = String;
+type Answer = i64;
 
-type Parsed = String;
-
-pub fn parse(input: String) -> Parsed {
+pub fn parse(input: String) -> Model {
     input
 }
 
-pub fn part1(input: Parsed) -> impl Answer {
+pub fn part1(input: Model) -> Answer {
     // println!("pos: {:?}", pos);
     // println!("depth * horizontal = {}", pos.horizontal * pos.depth);
     let mut pos = Orientation {
@@ -37,7 +36,7 @@ pub fn part1(input: Parsed) -> impl Answer {
     pos.horizontal * pos.depth
 }
 
-pub fn part2(input: Parsed) -> impl Answer {
+pub fn part2(input: Model) -> Answer {
     let mut pos = Orientation {
         depth: 0,
         horizontal: 0,
