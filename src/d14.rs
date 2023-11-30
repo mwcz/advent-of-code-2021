@@ -235,3 +235,20 @@ pub struct PairRule {
 }
 
 const STEPS: u32 = 40;
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const INPUT: &str = include_str!("../input/d14");
+
+    #[test]
+    fn d14p1_test() {
+        assert_eq!(part1(parse(INPUT.to_string())), 3555);
+    }
+
+    #[test]
+    fn d14p2_test() {
+        assert_eq!(part2(parse(INPUT.to_string())), 4439442043739);
+    }
+}

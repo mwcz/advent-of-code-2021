@@ -134,3 +134,20 @@ pub struct Line {
     a: Point,
     b: Point,
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const INPUT: &str = include_str!("../input/d5");
+
+    #[test]
+    fn d5p1_test() {
+        assert_eq!(part1(parse(INPUT.to_string())), 5774);
+    }
+
+    #[test]
+    fn d5p2_test() {
+        assert_eq!(part2(parse(INPUT.to_string())), 18423);
+    }
+}

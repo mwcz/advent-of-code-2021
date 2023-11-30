@@ -180,3 +180,28 @@ impl Display for Grid {
         Ok(())
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const INPUT: &str = include_str!("../input/d13");
+
+    #[test]
+    fn d13p1_test() {
+        assert_eq!(part1(parse(INPUT.to_string())), 818);
+    }
+
+    #[test]
+    fn d13p2_test() {
+        assert_eq!(
+            &part2(parse(INPUT.to_string())).to_string(),
+            "▮    ▮▮▮   ▮▮  ▮▮▮  ▮▮▮  ▮▮▮▮  ▮▮  ▮▮▮ 
+▮    ▮  ▮ ▮  ▮ ▮  ▮ ▮  ▮ ▮    ▮  ▮ ▮  ▮
+▮    ▮  ▮ ▮    ▮  ▮ ▮  ▮ ▮▮▮  ▮    ▮▮▮ 
+▮    ▮▮▮  ▮ ▮▮ ▮▮▮  ▮▮▮  ▮    ▮    ▮  ▮
+▮    ▮ ▮  ▮  ▮ ▮    ▮ ▮  ▮    ▮  ▮ ▮  ▮
+▮▮▮▮ ▮  ▮  ▮▮▮ ▮    ▮  ▮ ▮▮▮▮  ▮▮  ▮▮▮ "
+        );
+    }
+}

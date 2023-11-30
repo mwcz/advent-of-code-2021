@@ -100,3 +100,20 @@ pub fn part2(input: Model) -> i64 {
 
     ox.first().unwrap() * co2.first().unwrap()
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const INPUT: &str = include_str!("../input/d3");
+
+    #[test]
+    fn d3p1_test() {
+        assert_eq!(part1(parse(INPUT.to_string())), 1997414);
+    }
+
+    #[test]
+    fn d3p2_test() {
+        assert_eq!(part2(parse(INPUT.to_string())), 1032597);
+    }
+}

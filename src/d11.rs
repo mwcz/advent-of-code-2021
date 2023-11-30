@@ -128,3 +128,20 @@ impl From<String> for Octopi {
         Octopi { levels }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const INPUT: &str = include_str!("../input/d11");
+
+    #[test]
+    fn d11p1_test() {
+        assert_eq!(part1(parse(INPUT.to_string())), 1620);
+    }
+
+    #[test]
+    fn d11p2_test() {
+        assert_eq!(part2(parse(INPUT.to_string())), 371);
+    }
+}

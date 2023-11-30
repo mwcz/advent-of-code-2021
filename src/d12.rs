@@ -153,3 +153,20 @@ pub fn part2(exits: Model) -> Answer {
 
     paths.len()
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const INPUT: &str = include_str!("../input/d12");
+
+    #[test]
+    fn d12p1_test() {
+        assert_eq!(part1(parse(INPUT.to_string())), 4104);
+    }
+
+    #[test]
+    fn d12p2_test() {
+        assert_eq!(part2(parse(INPUT.to_string())), 119760);
+    }
+}

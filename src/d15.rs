@@ -102,3 +102,20 @@ pub fn part2(grid_part: Model) -> Answer {
 
     lowest_risk
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const INPUT: &str = include_str!("../input/d15");
+
+    #[test]
+    fn d15p1_test() {
+        assert_eq!(part1(parse(INPUT.to_string())), 429);
+    }
+
+    #[test]
+    fn d15p2_test() {
+        assert_eq!(part2(parse(INPUT.to_string())), 2844);
+    }
+}

@@ -181,3 +181,20 @@ impl Board {
         }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const INPUT: &str = include_str!("../input/d4");
+
+    #[test]
+    fn d4p1_test() {
+        assert_eq!(part1(parse(INPUT.to_string())), 8442);
+    }
+
+    #[test]
+    fn d4p2_test() {
+        assert_eq!(part2(parse(INPUT.to_string())), 4590);
+    }
+}

@@ -47,3 +47,20 @@ pub fn solve(mut counts: Model, days: usize) -> Answer {
 
     counts.iter().sum::<i64>()
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const INPUT: &str = include_str!("../input/d6");
+
+    #[test]
+    fn d1p1_test() {
+        assert_eq!(part1(parse(INPUT.to_string())), 383160);
+    }
+
+    #[test]
+    fn d1p2_test() {
+        assert_eq!(part2(parse(INPUT.to_string())), 1721148811504);
+    }
+}

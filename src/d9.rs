@@ -240,3 +240,20 @@ fn in_range(loc: &Coord, terrain: &Vec<Vec<u8>>) -> bool {
         && loc.x < terrain[0].len().try_into().unwrap()
         && loc.y < terrain.len().try_into().unwrap()
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const INPUT: &str = include_str!("../input/d9");
+
+    #[test]
+    fn d9p1_test() {
+        assert_eq!(part1(parse(INPUT.to_string())), 633);
+    }
+
+    #[test]
+    fn d9p2_test() {
+        assert_eq!(part2(parse(INPUT.to_string())), 1050192);
+    }
+}

@@ -120,3 +120,20 @@ pub fn part2(input: Model) -> String {
 
     "incomplete".to_string()
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const INPUT: &str = include_str!("../input/d8");
+
+    #[test]
+    fn d9p1_test() {
+        assert_eq!(part1(parse(INPUT.to_string())), 362);
+    }
+
+    // #[test]
+    // fn d8p2_test() {
+    //     assert_eq!(part2(parse(INPUT.to_string())), "incomplete");
+    // }
+}

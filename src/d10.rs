@@ -180,3 +180,20 @@ pub fn part2(input: Model) -> Answer {
 
     answer
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    const INPUT: &str = include_str!("../input/d10");
+
+    #[test]
+    fn d10p1_test() {
+        assert_eq!(part1(parse(INPUT.to_string())), 296535);
+    }
+
+    #[test]
+    fn d10p2_test() {
+        assert_eq!(part2(parse(INPUT.to_string())), 4245130838);
+    }
+}
