@@ -55,12 +55,12 @@ mod tests {
     const INPUT: &str = include_str!("../input/d6");
 
     #[test]
-    fn d1p1_test() {
+    fn d6p1_test() {
         assert_eq!(part1(parse(INPUT.to_string())), 383160);
     }
 
     #[test]
-    fn d1p2_test() {
+    fn d6p2_test() {
         assert_eq!(part2(parse(INPUT.to_string())), 1721148811504);
     }
 }
