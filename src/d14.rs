@@ -192,7 +192,7 @@ pub fn part2((_, (mut polymers, rules, pairs)): Model) -> Answer {
     letters_indexed.sort_by(|a, b| a.1[0..1].cmp(&b.1[0..1]));
 
     let mut letter_counts: Vec<(String, i64)> = letters_indexed
-        .group_by(|a, b| a.1[0..1] == b.1[0..1])
+        .chunk_by(|a, b| a.1[0..1] == b.1[0..1])
         .map(|group| {
             let last_letter_bonus = if group[0].1[0..1] == *polymers.last().unwrap() {
                 1
